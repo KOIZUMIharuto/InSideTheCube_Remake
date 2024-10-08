@@ -5,17 +5,15 @@ public class CubeManager : MonoBehaviour
 {
 	[SerializeField] private List<GameObject> blocks = new List<GameObject>();
 
-	// Start is called before the first frame update
-	void Start()
+	public void UpdateCube()
 	{
-		// Initialization code here
 		foreach (GameObject block in blocks)
 			block.GetComponent<BlockManager>().UpdateBelongingUnit();
 	}
 
-	// Update is called once per frame
-	void Update()
+	public void UpdatePanelRotationStatus()
 	{
-		// Frame update code here
+		foreach (GameObject block in blocks)
+			block.GetComponent<BlockManager>().UpdatePanelRotationStatus();
 	}
 }

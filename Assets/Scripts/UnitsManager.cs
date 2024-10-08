@@ -45,14 +45,14 @@ public class UnitsManager : MonoBehaviour
 			return -2;
 	}
 
-	public GameObject GetUnit(int unit)
+	public UnitManager GetUnit(int unit)
 	{
 		if (unit == 1)
-			return top.gameObject;
+			return top;
 		else if (unit == 0)
-			return center.gameObject;
+			return center;
 		else if (unit == -1)
-			return bottom.gameObject;
+			return bottom;
 		else
 			return null;
 	}

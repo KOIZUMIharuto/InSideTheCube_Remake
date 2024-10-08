@@ -3,10 +3,13 @@ using DG.Tweening;
 
 public class CameraManager : MonoBehaviour
 {
+	[SerializeField] private GameObject cube;
+
 	public bool inSideTheCube = false;
 
 	public Vector3 forwardDirection = Vector3.zero;
 	public Vector3 upDirection = Vector3.zero;
+	public Vector3 rightDirection = Vector3.zero;
 
     [SerializeField] private float moveDuration = 1.0f;
     [SerializeField] private float rotationDuration = 1.0f;
@@ -21,12 +24,6 @@ public class CameraManager : MonoBehaviour
     private Quaternion originalRotation;
 	private Quaternion currentRotation;
 
-	void Start()
-	{
-		// 初期回転を記録（クォータニオン）
-		currentRotation = cameraSystem.transform.rotation;
-	}
-
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.I) && !inSideTheCube)
@@ -36,18 +33,22 @@ public class CameraManager : MonoBehaviour
 			GetOutOfCube();
 
 		if (inSideTheCube)
-		{
 			HandleCameraRotation();
-			forwardDirection = cameraSystem.transform.parent.InverseTransformDirection(cameraSystem.transform.forward);
-			forwardDirection = new Vector3(Mathf.Round(forwardDirection.x), Mathf.Round(forwardDirection.y), Mathf.Round(forwardDirection.z));
-			upDirection = cameraSystem.transform.parent.InverseTransformDirection(cameraSystem.transform.up);
-			upDirection = new Vector3(Mathf.Round(upDirection.x), Mathf.Round(upDirection.y), Mathf.Round(upDirection.z));
-		}
 		else
 		{
 			forwardDirection = Vector3.zero;
 			upDirection = Vector3.zero;
 		}
+	}
+
+	private void UpdateCameraStatus()
+	{
+		forwardDirection = cameraSystem.transform.parent.InverseTransformDirection(cameraSystem.transform.forward);
+		forwardDirection = new Vector3(Mathf.Round(forwardDirection.x), Mathf.Round(forwardDirection.y), Mathf.Round(forwardDirection.z));
+		upDirection = cameraSystem.transform.parent.InverseTransformDirection(cameraSystem.transform.up);
+		upDirection = new Vector3(Mathf.Round(upDirection.x), Mathf.Round(upDirection.y), Mathf.Round(upDirection.z));
+		rightDirection = cameraSystem.transform.parent.InverseTransformDirection(cameraSystem.transform.right);
+		rightDirection = new Vector3(Mathf.Round(rightDirection.x), Mathf.Round(rightDirection.y), Mathf.Round(rightDirection.z));
 	}
 
     public void MoveInToCube()
@@ -61,8 +62,14 @@ public class CameraManager : MonoBehaviour
         // 移動と回転を同時に実行
         Sequence sequence = DOTween.Sequence();
 		sequence.Append(transform.DOLocalMove(targetLocalPosition, moveDuration));
-		sequence.Join(transform.DOLocalRotateQuaternion(targetLocalRotation, rotationDuration));
-        sequence.OnComplete(() => inSideTheCube = true);
+		sequence.Join(transform.DOLocalRotateQuaternion(targetLocalRotation, moveDuration));
+        sequence.OnComplete(() => {
+			inSideTheCube = true;
+			currentRotation = cameraSystem.transform.localRotation;
+			UpdateCameraStatus();
+			cube.GetComponent<CubeManager>().UpdateCube();
+		});
+		
     }
 
     public void GetOutOfCube()
@@ -73,12 +80,13 @@ public class CameraManager : MonoBehaviour
         // 元の座標と方向に戻る
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(originalPosition, moveDuration));
-        sequence.Join(transform.DORotateQuaternion(originalRotation, rotationDuration));
+        sequence.Join(transform.DORotateQuaternion(originalRotation, moveDuration));
     }
 
 	private void HandleCameraRotation()
 	{
-		if (cameraSystem == null) return;
+		if (cameraSystem == null || Input.anyKeyDown == false)
+			return;
 
 		Quaternion rotationChange = Quaternion.identity;
 
@@ -90,13 +98,21 @@ public class CameraManager : MonoBehaviour
 			rotationChange = Quaternion.Euler(0f, -90f, 0f);
 		if (Input.GetKeyDown(KeyCode.D))
 			rotationChange = Quaternion.Euler(0f, 90f, 0f);
+		if (Input.GetKeyDown(KeyCode.Q))
+			rotationChange = Quaternion.Euler(0f, 0f, 90f);
+		if (Input.GetKeyDown(KeyCode.E))
+			rotationChange = Quaternion.Euler(0f, 0f, -90f);
 
 		if (rotationChange != Quaternion.identity)
 		{
 			currentRotation *= rotationChange;
-			cameraSystem.transform.DOLocalRotateQuaternion(currentRotation, 0.3f);
+			Sequence sequence = DOTween.Sequence();
+			sequence.Append(cameraSystem.transform.DOLocalRotateQuaternion(currentRotation, rotationDuration));
+			sequence.OnComplete(() => {
+				UpdateCameraStatus();
+				cube.GetComponent<CubeManager>().UpdatePanelRotationStatus();
+			});
 		}
 	}
-
 
 }
