@@ -19,7 +19,7 @@ public class MouseManager : MonoBehaviour
 	private bool horizontalRotateDirection;
 	
 
-	void Update()
+	private void Update()
 	{
 		// マウスボタンが押された瞬間
 		if (Input.GetMouseButtonDown(0) && clickedPanel == null)

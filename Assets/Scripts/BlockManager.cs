@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class BlockManager : MonoBehaviour
 {
@@ -13,10 +14,13 @@ public class BlockManager : MonoBehaviour
 
 	[SerializeField] private List<GameObject> Panels = new List<GameObject>();
 
+	private Vector3 homePosition;
+
 	public Vector3 attachedUnit = Vector3.zero;
 
 	void Start()
 	{
+		homePosition = transform.localPosition;
 		foreach (Transform child in transform)
 			Panels.Add(child.gameObject);
 	}
@@ -93,10 +97,29 @@ public class BlockManager : MonoBehaviour
 		transform.localEulerAngles = localRotation;
 	}
 
-	public void ToggleCollider(bool onOff)
+	public void SeparateBlock()
 	{
+		Rigidbody rigidbody = GetComponent<Rigidbody>();
+		// Vector3	direction = (transform.position - cube.transform.position).normalized;
+
+		rigidbody.isKinematic = false;
+		// rigidbody.AddForce(direction * 10f, ForceMode.Impulse);
 		foreach (GameObject panel in Panels)
-			panel.GetComponent<BoxCollider>().enabled = onOff;
+			panel.GetComponent<PanelManager>().ToggleCollider(true);
+	}
+
+	public void ResetBlock()
+	{
+		GetComponent<Rigidbody>().isKinematic = true;
+		Sequence sequence = DOTween.Sequence();
+		sequence.Append(transform.DOLocalMove(homePosition, 1.0f).SetEase(Ease.OutCubic));
+		sequence.Join(transform.DOLocalRotate(Vector3.zero, 1.0f).SetEase(Ease.OutCubic));
+		sequence.OnComplete(() => {
+			foreach (GameObject panel in Panels)
+				panel.GetComponent<PanelManager>().ToggleCollider(false);
+		});
+		attachedUnit = Vector3.zero;
+		UpdateBelongingUnit();
 	}
 
 }

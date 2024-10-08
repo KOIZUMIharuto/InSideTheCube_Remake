@@ -11,6 +11,7 @@ public class PanelManager : MonoBehaviour
 	[SerializeField] private CameraManager cameraManager;
 
 	private GameObject parentBlock;
+	private GameObject basePanel;
 	public Vector3 panelDirection;
 
 	public UnitsManager verticalRotateUnit;
@@ -21,6 +22,7 @@ public class PanelManager : MonoBehaviour
 	void Start()
 	{
 		parentBlock = transform.parent.gameObject;
+		basePanel = transform.Find("BasePanel").gameObject;
 	}
 	public void getPanelDirection()
 	{
@@ -103,7 +105,7 @@ public class PanelManager : MonoBehaviour
 
 	public void ToggleCollider(bool onOff)
 	{
-		GetComponent<BoxCollider>().enabled = onOff;
+		basePanel.GetComponent<MeshCollider>().enabled = onOff;
 	}
 
 	// Add your custom methods and logic here
