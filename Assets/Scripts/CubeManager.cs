@@ -16,4 +16,12 @@ public class CubeManager : MonoBehaviour
 		foreach (GameObject block in blocks)
 			block.GetComponent<BlockManager>().UpdatePanelRotationStatus();
 	}
+
+	public void ToggleCollider(bool onOff)
+	{
+		foreach (GameObject block in blocks)
+		{
+			block.GetComponent<BlockManager>().ToggleCollider(onOff);
+		}
+	}
 }

@@ -101,5 +101,10 @@ public class PanelManager : MonoBehaviour
 		parentBlock.GetComponent<BlockManager>().SetRotationUnit(this);
 	}
 
+	public void ToggleCollider(bool onOff)
+	{
+		GetComponent<BoxCollider>().enabled = onOff;
+	}
+
 	// Add your custom methods and logic here
 }

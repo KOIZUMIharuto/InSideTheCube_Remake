@@ -93,4 +93,10 @@ public class BlockManager : MonoBehaviour
 		transform.localEulerAngles = localRotation;
 	}
 
+	public void ToggleCollider(bool onOff)
+	{
+		foreach (GameObject panel in Panels)
+			panel.GetComponent<BoxCollider>().enabled = onOff;
+	}
+
 }
