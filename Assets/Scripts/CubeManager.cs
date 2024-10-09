@@ -12,6 +12,8 @@ public class CubeManager : MonoBehaviour
 	[SerializeField] private float explosionForce = 500f;
 	[SerializeField] private float explosionRadius = 100f;
 
+	[SerializeField] private float torqueRange = 10f;
+
 	void Update()
 	{
 		// if (Input.GetKeyDown(KeyCode.U))
@@ -36,14 +38,6 @@ public class CubeManager : MonoBehaviour
 			block.GetComponent<BlockManager>().UpdatePanelRotationStatus();
 	}
 
-	private void TogglePanelCollider(bool onOff)
-	{
-		foreach (GameObject block in blocks)
-		{
-			block.GetComponent<BlockManager>().SeparateBlock();
-		}
-	}
-
 	public void CrashCube()
 	{
 		pointLight.GetComponent<Light>().enabled = false;
@@ -62,7 +56,7 @@ public class CubeManager : MonoBehaviour
 
 	public Sequence ResetCube()
 	{
-		
+		Rigidbody rigidbody = GetComponent<Rigidbody>();
 		Sequence sequence = DOTween.Sequence();
 		foreach (GameObject block in blocks)
 		{
@@ -70,6 +64,8 @@ public class CubeManager : MonoBehaviour
 			sequence.AppendInterval(0.03f);
 		}
 		sequence.OnStart(() => {
+			// rigidbody.useGravity = false;
+			rigidbody.isKinematic = false;
 			pointLight.GetComponent<Light>().enabled = true;
 			GetComponent<BoxCollider>().enabled = true;
 			cameraSystem.transform.DOLocalRotateQuaternion(Quaternion.identity, 0.6f);
@@ -80,24 +76,40 @@ public class CubeManager : MonoBehaviour
 		return sequence;
 	}
 
-	public Tween FloatCube()
+	public Sequence FloatCube()
 	{
-		float floatHeight = 10f;
+		float floatHeight = 20f;
 		float floatDuration = 0.5f;
-		// GetComponent<Rigidbody>().isKinematic = true;
-		// transform.DOLocalMoveY(floatHeight, floatDuration).SetEase(Ease.OutBack);
-		return (transform.DOLocalMoveY(floatHeight, floatDuration).SetEase(Ease.OutBack)
-			.OnStart(() => {
-				GetComponent<Rigidbody>().isKinematic = true;
-			}));
+		Vector3 floatRotation = new Vector3(
+			Random.Range(-10, 10),
+			Random.Range(-10, 10),
+			Random.Range(-10, 10)
+		);
+
+		Sequence sequence = DOTween.Sequence();
+		sequence.Append(transform.DOLocalMove(new Vector3(0, floatHeight, 0), floatDuration).SetEase(Ease.OutBack));
+		sequence.Join(transform.DOLocalRotate(floatRotation, floatDuration).SetEase(Ease.OutCubic));
+		sequence.OnStart(() => {
+			GetComponent<Rigidbody>().isKinematic = true;
+		});
+		return sequence;
 	}
 
 	public void FallCube()
 	{
-		GetComponent<Rigidbody>().isKinematic = false;
+		Rigidbody rigidbody = GetComponent<Rigidbody>();
+		rigidbody.useGravity = true;
+		rigidbody.isKinematic = false;
+
+		Vector3 randomTorque = new Vector3(
+			Random.Range(-torqueRange, torqueRange),
+			Random.Range(-torqueRange, torqueRange),
+			Random.Range(-torqueRange, torqueRange)
+		);
+		rigidbody.AddTorque(randomTorque, ForceMode.Impulse);
 	}
 
-	public void ShuffleCube()
+	public Sequence ShuffleCube()
 	{
 		Sequence sequence = DOTween.Sequence();
 		int shuffleCount = 25 + Random.Range(0, 10);
@@ -108,5 +120,6 @@ public class CubeManager : MonoBehaviour
 			Tween tween = unitsManagers[Random.Range(0, unitsManagers.Count)].AutoRotate(Random.Range(0, 2) == 0, tweenDuration);
 			sequence.Append(tween);
 		}
+		return sequence;
 	}
 }

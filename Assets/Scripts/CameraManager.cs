@@ -24,6 +24,14 @@ public class CameraManager : MonoBehaviour
     private Quaternion originalRotation;
 	private Quaternion currentRotation;
 
+	private Sequence enterSequence;
+
+	void Start()
+	{
+		originalPosition = transform.position;
+		originalRotation = transform.rotation;
+	}
+
 	void Update()
 	{
 		if (inSideTheCube)
@@ -45,39 +53,39 @@ public class CameraManager : MonoBehaviour
 		rightDirection = new Vector3(Mathf.Round(rightDirection.x), Mathf.Round(rightDirection.y), Mathf.Round(rightDirection.z));
 	}
 
-    public Sequence MoveInToCube()
-    {
-        Sequence sequence = DOTween.Sequence();
-		sequence.Append(transform.DOLocalMove(targetLocalPosition, moveDuration));
-		sequence.Join(transform.DOLocalRotateQuaternion(targetLocalRotation, moveDuration));
-        sequence.OnStart(() => {
-			originalPosition = transform.position;
-			originalRotation = transform.rotation;
+	public Sequence EnterCube()
+	{
+		enterSequence = DOTween.Sequence();
+		enterSequence.Append(transform.DOLocalMove(targetLocalPosition, moveDuration));
+		enterSequence.Join(transform.DOLocalRotateQuaternion(targetLocalRotation, moveDuration));
+		enterSequence.OnStart(() => {
 			this.transform.parent = cameraSystem.transform;
 		})
 		.OnComplete(() => {
 			inSideTheCube = true;
 			currentRotation = cameraSystem.transform.localRotation;
 			UpdateCameraStatus();
-			cube.GetComponent<CubeManager>().UpdateCube();
+			enterSequence = null;
 		});
 		
-		return sequence;
+		return enterSequence;
 		
-    }
+	}
 
-    public Sequence GetOutOfCube()
-    {
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(transform.DOMove(originalPosition, moveDuration));
-        sequence.Join(transform.DORotateQuaternion(originalRotation, moveDuration));
+	public Sequence ExitCube()
+	{
+		if (enterSequence != null)
+			enterSequence.Kill(true);
+		Sequence sequence = DOTween.Sequence();
+		sequence.Append(transform.DOMove(originalPosition, moveDuration));
+		sequence.Join(transform.DORotateQuaternion(originalRotation, moveDuration));
 		sequence.OnStart(() => {
 			inSideTheCube = false;
 			this.transform.parent = null;
 		});
 
 		return sequence;
-    }
+	}
 
 	private void HandleCameraRotation()
 	{

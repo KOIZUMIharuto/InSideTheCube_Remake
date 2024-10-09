@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private CubeManager cubeManager;
 	[SerializeField] private CameraManager cameraManager;
 
+	public int rotateCount = 0;
+	public float time = 0;
 	public bool inGame = false;
-	public bool crashed = false;
+	private bool crashed = false;
+	private Sequence sequence;
 	void Start()
 	{
 		cubeManager.UpdateCube();
@@ -27,47 +30,74 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.O))
 			ExitCube();
 		if (Input.GetKeyDown(KeyCode.R))
-			ResetGame();
+			ResetCube();
 		if (Input.GetKeyDown(KeyCode.S))
 			ShuffleCube();
 	}
 
 	private void ShuffleCube()
 	{
-		if (inGame || crashed)
+		if (inGame || crashed || sequence != null)
 			return;
-		cubeManager.ShuffleCube();
+		sequence = DOTween.Sequence();
+		sequence.Append(cubeManager.FloatCube());
+		sequence.Append(cubeManager.ShuffleCube());
+		sequence.OnComplete(() =>
+		{
+			cubeManager.FallCube();
+			sequence = null;
+		});
 	}
 
 	private void StartGame()
 	{
+		if (crashed || sequence != null)
+			return;
 		inGame = true;
-		Sequence sequence = DOTween.Sequence();
+		sequence = DOTween.Sequence();
 		sequence.Append(cubeManager.FloatCube());
-		sequence.Append(cameraManager.MoveInToCube());
+		sequence.Append(cameraManager.EnterCube());
+		sequence.OnComplete(() =>
+		{
+			sequence = null;
+		});
 	}
 
 	private void EnterCube()
 	{
 		if (!inGame)
 			return;
-		Sequence sequence = DOTween.Sequence();
-		sequence.Append(cameraManager.MoveInToCube());
+		if (sequence != null)
+			sequence.Kill(false);
+		sequence = DOTween.Sequence();
+		sequence.Append(cameraManager.EnterCube());
+		sequence.OnComplete(() =>
+		{
+			sequence = null;
+		});
 	}
 
 	private void ExitCube()
 	{
 		if (!inGame)
 			return;
-		Sequence sequence = DOTween.Sequence();
-		sequence.Append(cameraManager.GetOutOfCube());
+		if (sequence != null)
+			sequence.Kill(false);
+		sequence = DOTween.Sequence();
+		sequence.Append(cameraManager.ExitCube());
+		sequence.OnComplete(() =>
+		{
+			sequence = null;
+		});
 	}
 
 	private void EndGame()
 	{
-		Sequence sequence = DOTween.Sequence();
-		if (cameraManager.inSideTheCube)
-			sequence.Append(cameraManager.GetOutOfCube());
+		if (sequence != null)
+			sequence.Kill(false);
+		sequence = DOTween.Sequence();
+		if (inGame)
+			sequence.Append(cameraManager.ExitCube());
 		sequence.OnStart(() =>
 		{
 			crashed = true;
@@ -76,18 +106,22 @@ public class GameManager : MonoBehaviour
 		.OnComplete(() =>
 		{
 			inGame = false;
+			sequence = null;
 		});
 	}
 
-	private void ResetGame()
+	private void ResetCube()
 	{
-		if (inGame)
+		if (inGame || sequence != null)
 			return;
-		Sequence sequence = DOTween.Sequence();
+		cubeManager.FallCube();
+		sequence = DOTween.Sequence();
 		sequence.Append(cubeManager.ResetCube());
 		sequence.OnComplete(() =>
 		{
+			cubeManager.FallCube();
 			crashed = false;
+			sequence = null;
 		});
 	}
 
