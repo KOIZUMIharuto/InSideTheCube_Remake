@@ -5,6 +5,8 @@ using DG.Tweening;
 public class CubeManager : MonoBehaviour
 {
 	[SerializeField] private Light pointLight;
+	[SerializeField] private GameObject cameraSystem;
+	[SerializeField] private List<UnitsManager> unitsManagers = new List<UnitsManager>();
 	[SerializeField] private List<GameObject> blocks = new List<GameObject>();
 
 	[SerializeField] private float explosionForce = 500f;
@@ -12,14 +14,14 @@ public class CubeManager : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.U))
-			FloatCube();
-		if (Input.GetKeyDown(KeyCode.F))
-			FallCube();
-		if (Input.GetKeyDown(KeyCode.C))
-			CrashCube();
-		if (Input.GetKeyDown(KeyCode.R))
-			ResetCube();
+		// if (Input.GetKeyDown(KeyCode.U))
+		// 	FloatCube();
+		// if (Input.GetKeyDown(KeyCode.F))
+		// 	FallCube();
+		// if (Input.GetKeyDown(KeyCode.C))
+		// 	CrashCube();
+		// if (Input.GetKeyDown(KeyCode.R))
+		// 	ResetCube();
 	}
 
 	public void UpdateCube()
@@ -58,31 +60,53 @@ public class CubeManager : MonoBehaviour
 		}
 	}
 
-	public void ResetCube()
+	public Sequence ResetCube()
 	{
-		pointLight.GetComponent<Light>().enabled = true;
-		GetComponent<BoxCollider>().enabled = true;
+		
 		Sequence sequence = DOTween.Sequence();
 		foreach (GameObject block in blocks)
 		{
 			sequence.AppendCallback(() => block.GetComponent<BlockManager>().ResetBlock());
-			sequence.AppendInterval(0.08f);
+			sequence.AppendInterval(0.03f);
 		}
-		sequence.OnComplete(() => {
+		sequence.OnStart(() => {
+			pointLight.GetComponent<Light>().enabled = true;
+			GetComponent<BoxCollider>().enabled = true;
+			cameraSystem.transform.DOLocalRotateQuaternion(Quaternion.identity, 0.6f);
+		})
+		.OnComplete(() => {
 			pointLight.GetComponent<Light>().enabled = true;
 		});
+		return sequence;
 	}
 
-	public void FloatCube()
+	public Tween FloatCube()
 	{
-		GetComponent<Rigidbody>().isKinematic = true;
 		float floatHeight = 10f;
 		float floatDuration = 0.5f;
-		transform.DOLocalMoveY(floatHeight, floatDuration).SetEase(Ease.OutBack);
+		// GetComponent<Rigidbody>().isKinematic = true;
+		// transform.DOLocalMoveY(floatHeight, floatDuration).SetEase(Ease.OutBack);
+		return (transform.DOLocalMoveY(floatHeight, floatDuration).SetEase(Ease.OutBack)
+			.OnStart(() => {
+				GetComponent<Rigidbody>().isKinematic = true;
+			}));
 	}
 
 	public void FallCube()
 	{
 		GetComponent<Rigidbody>().isKinematic = false;
+	}
+
+	public void ShuffleCube()
+	{
+		Sequence sequence = DOTween.Sequence();
+		int shuffleCount = 25 + Random.Range(0, 10);
+		float tweenDuration = 0.08f;
+
+		for (int i = 0; i < shuffleCount; i++)
+		{
+			Tween tween = unitsManagers[Random.Range(0, unitsManagers.Count)].AutoRotate(Random.Range(0, 2) == 0, tweenDuration);
+			sequence.Append(tween);
+		}
 	}
 }

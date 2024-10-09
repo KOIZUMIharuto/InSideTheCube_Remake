@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class UnitsManager : MonoBehaviour
 {
@@ -55,5 +56,11 @@ public class UnitsManager : MonoBehaviour
 			return bottom;
 		else
 			return null;
+	}
+
+	public Tween AutoRotate(bool rotateDirection, float tweenDuration)
+	{
+		UnitManager unitToRotate = GetUnit(Random.Range(-1, 2));
+		return unitToRotate.AutoRotate(rotateDirection, tweenDuration);
 	}
 }

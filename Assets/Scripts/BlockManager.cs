@@ -111,15 +111,16 @@ public class BlockManager : MonoBehaviour
 	public void ResetBlock()
 	{
 		GetComponent<Rigidbody>().isKinematic = true;
+		float tweenDuration = 0.5f;
 		Sequence sequence = DOTween.Sequence();
-		sequence.Append(transform.DOLocalMove(homePosition, 1.0f).SetEase(Ease.OutCubic));
-		sequence.Join(transform.DOLocalRotate(Vector3.zero, 1.0f).SetEase(Ease.OutCubic));
+		sequence.Append(transform.DOLocalMove(homePosition, tweenDuration).SetEase(Ease.OutCubic));
+		sequence.Join(transform.DOLocalRotate(Vector3.zero, tweenDuration).SetEase(Ease.OutCubic));
 		sequence.OnComplete(() => {
 			foreach (GameObject panel in Panels)
 				panel.GetComponent<PanelManager>().ToggleCollider(false);
+			UpdateBelongingUnit();
 		});
 		attachedUnit = Vector3.zero;
-		UpdateBelongingUnit();
 	}
 
 }

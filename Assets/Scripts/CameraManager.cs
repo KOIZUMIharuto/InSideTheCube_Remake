@@ -26,15 +26,9 @@ public class CameraManager : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.I) && !inSideTheCube)
-			MoveInToCube();
-
-		if (Input.GetKeyDown(KeyCode.O) && inSideTheCube)
-			GetOutOfCube();
-
 		if (inSideTheCube)
 			HandleCameraRotation();
-		else
+		else if (forwardDirection != Vector3.zero || upDirection != Vector3.zero)
 		{
 			forwardDirection = Vector3.zero;
 			upDirection = Vector3.zero;
@@ -51,36 +45,38 @@ public class CameraManager : MonoBehaviour
 		rightDirection = new Vector3(Mathf.Round(rightDirection.x), Mathf.Round(rightDirection.y), Mathf.Round(rightDirection.z));
 	}
 
-    public void MoveInToCube()
+    public Sequence MoveInToCube()
     {
-        // 現在の座標と方向を記録
-        originalPosition = transform.position;
-        originalRotation = transform.rotation;
-
-		this.transform.parent = cameraSystem.transform;
-
-        // 移動と回転を同時に実行
         Sequence sequence = DOTween.Sequence();
 		sequence.Append(transform.DOLocalMove(targetLocalPosition, moveDuration));
 		sequence.Join(transform.DOLocalRotateQuaternion(targetLocalRotation, moveDuration));
-        sequence.OnComplete(() => {
+        sequence.OnStart(() => {
+			originalPosition = transform.position;
+			originalRotation = transform.rotation;
+			this.transform.parent = cameraSystem.transform;
+		})
+		.OnComplete(() => {
 			inSideTheCube = true;
 			currentRotation = cameraSystem.transform.localRotation;
 			UpdateCameraStatus();
 			cube.GetComponent<CubeManager>().UpdateCube();
 		});
 		
+		return sequence;
+		
     }
 
-    public void GetOutOfCube()
+    public Sequence GetOutOfCube()
     {
-        inSideTheCube = false;
-		this.transform.parent = null;
-
-        // 元の座標と方向に戻る
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOMove(originalPosition, moveDuration));
         sequence.Join(transform.DORotateQuaternion(originalRotation, moveDuration));
+		sequence.OnStart(() => {
+			inSideTheCube = false;
+			this.transform.parent = null;
+		});
+
+		return sequence;
     }
 
 	private void HandleCameraRotation()

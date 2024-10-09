@@ -25,6 +25,20 @@ public class UnitManager : MonoBehaviour
 		blocks.Remove(obj);
 	}
 
+	public Tween AutoRotate(bool rotateDirection, float tweenDuration)
+	{
+		float rotationAngle = rotateDirection ? 90 : -90;
+		return (transform.DOLocalRotateQuaternion(Quaternion.Euler(rotationAngle, 0, 0), tweenDuration)
+		.OnStart(() => {
+			SetBlocksChildren();
+		})
+		.OnComplete(() =>{
+			ReleaseBlocks();
+			transform.localRotation = Quaternion.Euler(0, 0, 0);
+			cube.GetComponent<CubeManager>().UpdateCube();
+		}));
+	}
+
 	public void Rotate(float mouseDeltaDirection, bool rotateDirection)
     {
         if (!rotating)
