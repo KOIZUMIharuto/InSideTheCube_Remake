@@ -139,5 +139,25 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
+	public void GameClear()
+	{
+		if (!inGame)
+			return;
+		if (sequence != null)
+			sequence.Kill(false);
+		sequence = DOTween.Sequence();
+		sequence.Append(cameraManager.ExitCube());
+		sequence.OnStart(() =>
+		{
+			inGame = false;
+			inSideTheCube = false;
+		})
+		.OnComplete(() =>
+		{
+			cubeManager.FallCube();
+			sequence = null;
+		});
+	}
+
 	// Add your game management methods here
 }

@@ -60,7 +60,6 @@ public class UnitManager : MonoBehaviour
 		return xRotation;
 	}
 
-
 	public void FinishRotation(MouseManager mouseManager)
 	{
 		if (!rotating)
@@ -77,7 +76,10 @@ public class UnitManager : MonoBehaviour
 			transform.localRotation = Quaternion.Euler(0, 0, 0);
 			mouseManager.verticalRotateUnit = null;
 			mouseManager.horizontalRotateUnit = null;
-			cube.GetComponent<CubeManager>().UpdateCube();
+			CubeManager cubeManager = cube.GetComponent<CubeManager>();
+			cubeManager.UpdateCube();
+			if (cubeManager.clearCheck())
+				gameManager.GameClear();
 		});
 	}
 
@@ -85,7 +87,6 @@ public class UnitManager : MonoBehaviour
 	{
 		if (!rotating)
 			return ;
-		//stop Dotween
 		DOTween.Kill(transform);
 		transform.localRotation = Quaternion.Euler(RoundToNearest90(transform.localEulerAngles.x), 0, 0);;
 		ReleaseBlocks();
