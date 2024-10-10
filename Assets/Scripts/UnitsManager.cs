@@ -8,7 +8,7 @@ public class UnitsManager : MonoBehaviour
 	[SerializeField] private UnitManager center;
 	[SerializeField] private UnitManager bottom;
 
-	public int AddObjectToList(GameObject obj, float position)
+	public int AddObjectToUnit(GameObject obj, float position)
 	{
 		UnitManager unitToremove;
 		UnitManager unitToAdd;

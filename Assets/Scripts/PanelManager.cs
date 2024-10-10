@@ -23,13 +23,12 @@ public class PanelManager : MonoBehaviour
 	{
 		parentBlock = transform.parent.gameObject;
 		basePanel = transform.Find("BasePanel").gameObject;
+		cube.GetComponent<CubeManager>().setPanel(gameObject);
 	}
 	public void getPanelDirection()
 	{
 		panelDirection = cube.transform.InverseTransformDirection(transform.up);
 		panelDirection = new Vector3(Mathf.Round(panelDirection.x), Mathf.Round(panelDirection.y), Mathf.Round(panelDirection.z));
-
-		Vector3 attachedUnit = transform.parent.GetComponent<BlockManager>().attachedUnit;
 		UpdateRotationStatus();
 	}
 

@@ -8,11 +8,47 @@ public class CubeManager : MonoBehaviour
 	[SerializeField] private GameObject cameraSystem;
 	[SerializeField] private List<UnitsManager> unitsManagers = new List<UnitsManager>();
 	[SerializeField] private List<GameObject> blocks = new List<GameObject>();
+	[SerializeField] private Dictionary<string, List<GameObject>> panelsDictionary = new Dictionary<string, List<GameObject>>
+	{
+		{ "White", new List<GameObject>() },
+		{ "Red", new List<GameObject>() },
+		{ "Blue", new List<GameObject>() },
+		{ "Yellow", new List<GameObject>() },
+		{ "Orange", new List<GameObject>() },
+		{ "Green", new List<GameObject>() }
+	};
 
 	[SerializeField] private float explosionForce = 500f;
 	[SerializeField] private float explosionRadius = 100f;
 
 	[SerializeField] private float torqueRange = 10f;
+
+	void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.C))
+		{
+			if (clearCheck())
+			{
+				Debug.Log("Clear!");
+			}
+			else
+			{
+				Debug.Log("Not Clear!");
+			}
+		}
+	}
+
+	public void setBlock(GameObject block)
+	{
+		blocks.Add(block);
+	}
+
+	public void setPanel(GameObject panel)
+	{
+		string color = panel.name;
+		if (panelsDictionary.ContainsKey(color))
+			panelsDictionary[color].Add(panel);
+	}
 
 	public void UpdateCube()
 	{
@@ -109,5 +145,20 @@ public class CubeManager : MonoBehaviour
 			sequence.Append(tween);
 		}
 		return sequence;
+	}
+
+	public bool clearCheck()
+	{
+		foreach (List<GameObject> panels in panelsDictionary.Values)
+		{
+			PanelManager firstPanel = panels[0].GetComponent<PanelManager>();
+			for (int i = 1; i < panels.Count; i++)
+			{
+				PanelManager panel = panels[i].GetComponent<PanelManager>();
+				if (firstPanel.panelDirection != panel.panelDirection)
+					return false;
+			}
+		}
+		return true;
 	}
 }

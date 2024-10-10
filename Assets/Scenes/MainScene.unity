@@ -8834,6 +8834,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &170051412
 Mesh:
@@ -9663,6 +9664,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &184287296
 GameObject:
@@ -19638,6 +19640,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &387264383
 GameObject:
@@ -29482,6 +29485,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &547534008
 Mesh:
@@ -30916,6 +30920,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &560005872
 GameObject:
@@ -35265,6 +35270,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &648275269
 GameObject:
@@ -39219,6 +39225,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &735450509
 Mesh:
@@ -39466,6 +39473,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &746280174
 GameObject:
@@ -42830,6 +42838,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &816132821
 GameObject:
@@ -43516,6 +43525,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &830666130
 Mesh:
@@ -49869,6 +49879,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &958137279
 GameObject:
@@ -51586,6 +51597,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1013397363
 GameObject:
@@ -54430,6 +54442,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1070610637
 GameObject:
@@ -63869,6 +63882,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1314599009
 GameObject:
@@ -64555,6 +64569,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1341874404
 GameObject:
@@ -65952,6 +65967,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1376115875
 GameObject:
@@ -66304,6 +66320,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1392631066
 GameObject:
@@ -67762,6 +67779,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1433726750
 GameObject:
@@ -73009,6 +73027,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1547605118
 GameObject:
@@ -78808,6 +78827,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &1621235755
 Mesh:
@@ -82506,6 +82526,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1675749742
 GameObject:
@@ -85910,6 +85931,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1764758870
 GameObject:
@@ -87259,6 +87281,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &1790592688
 GameObject:
@@ -87455,33 +87478,7 @@ MonoBehaviour:
   - {fileID: 1382293544}
   - {fileID: 1827219587}
   - {fileID: 1547605120}
-  blocks:
-  - {fileID: 1369661444}
-  - {fileID: 954280178}
-  - {fileID: 1308015990}
-  - {fileID: 727609597}
-  - {fileID: 1610092399}
-  - {fileID: 180422563}
-  - {fileID: 1546918254}
-  - {fileID: 1433588841}
-  - {fileID: 1004252929}
-  - {fileID: 1316809594}
-  - {fileID: 378743730}
-  - {fileID: 1672379058}
-  - {fileID: 1894513037}
-  - {fileID: 1835468866}
-  - {fileID: 819860589}
-  - {fileID: 2017462927}
-  - {fileID: 1392264375}
-  - {fileID: 739298380}
-  - {fileID: 553606305}
-  - {fileID: 148133065}
-  - {fileID: 1064600289}
-  - {fileID: 798875088}
-  - {fileID: 546045444}
-  - {fileID: 1762284131}
-  - {fileID: 642213986}
-  - {fileID: 1789322365}
+  blocks: []
   explosionForce: 800
   explosionRadius: 100
   torqueRange: 50
@@ -88250,6 +88247,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &1848328657
 Mesh:
@@ -90169,6 +90167,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!43 &1896259451
 Mesh:
@@ -96147,6 +96146,7 @@ MonoBehaviour:
   unitsManagerUED: {fileID: 1827219587}
   unitsManagerRML: {fileID: 1547605120}
   Panels: []
+  homeUnit: {x: 0, y: 0, z: 0}
   attachedUnit: {x: 0, y: 0, z: 0}
 --- !u!1 &2026781295
 GameObject:

@@ -16,20 +16,24 @@ public class BlockManager : MonoBehaviour
 
 	private Vector3 homePosition;
 
-	public Vector3 attachedUnit = Vector3.zero;
+	public Vector3 homeUnit = Vector3.zero;
+	[SerializeField] private Vector3 attachedUnit = Vector3.zero;
 
 	void Start()
 	{
-		homePosition = transform.localPosition;
 		foreach (Transform child in transform)
 			Panels.Add(child.gameObject);
+		homePosition = transform.localPosition;
+		UpdateBelongingUnit();
+		homeUnit = attachedUnit;
+		cube.GetComponent<CubeManager>().setBlock(gameObject);
 	}
 	public void	UpdateBelongingUnit()
 	{
 		Vector3 localPosition = cube.transform.InverseTransformPoint(this.gameObject.transform.position);
-		attachedUnit.x = unitsManagerFSB.AddObjectToList(this.gameObject, localPosition.x);
-		attachedUnit.y = unitsManagerUED.AddObjectToList(this.gameObject, localPosition.y);
-		attachedUnit.z = unitsManagerRML.AddObjectToList(this.gameObject, localPosition.z);
+		attachedUnit.x = unitsManagerFSB.AddObjectToUnit(this.gameObject, localPosition.x);
+		attachedUnit.y = unitsManagerUED.AddObjectToUnit(this.gameObject, localPosition.y);
+		attachedUnit.z = unitsManagerRML.AddObjectToUnit(this.gameObject, localPosition.z);
 		foreach (GameObject panel in Panels)
 			panel.GetComponent<PanelManager>().getPanelDirection();
 	}
@@ -100,10 +104,7 @@ public class BlockManager : MonoBehaviour
 	public void SeparateBlock()
 	{
 		Rigidbody rigidbody = GetComponent<Rigidbody>();
-		// Vector3	direction = (transform.position - cube.transform.position).normalized;
-
 		rigidbody.isKinematic = false;
-		// rigidbody.AddForce(direction * 10f, ForceMode.Impulse);
 		foreach (GameObject panel in Panels)
 			panel.GetComponent<PanelManager>().ToggleCollider(true);
 	}
