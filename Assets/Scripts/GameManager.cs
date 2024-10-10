@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 	public int rotateCount = 0;
 	public float time = 0;
 	public bool inGame = false;
+	public bool inSideTheCube = false;
 	private bool crashed = false;
 	private Sequence sequence;
 	void Start()
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
+		if (inGame)
+			time += Time.deltaTime;
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
 			if (inGame)
@@ -33,6 +36,11 @@ public class GameManager : MonoBehaviour
 			ResetCube();
 		if (Input.GetKeyDown(KeyCode.S))
 			ShuffleCube();
+	}
+
+	public void IncreaseRotateCount()
+	{
+		rotateCount++;
 	}
 
 	private void ShuffleCube()
@@ -54,11 +62,15 @@ public class GameManager : MonoBehaviour
 		if (crashed || sequence != null)
 			return;
 		inGame = true;
+		time = 0;
+		rotateCount = 0;
+		cubeManager.UpdateCube();
 		sequence = DOTween.Sequence();
 		sequence.Append(cubeManager.FloatCube());
 		sequence.Append(cameraManager.EnterCube());
 		sequence.OnComplete(() =>
 		{
+			inSideTheCube = true;
 			sequence = null;
 		});
 	}
@@ -73,6 +85,7 @@ public class GameManager : MonoBehaviour
 		sequence.Append(cameraManager.EnterCube());
 		sequence.OnComplete(() =>
 		{
+			inSideTheCube = true;
 			sequence = null;
 		});
 	}
@@ -83,6 +96,7 @@ public class GameManager : MonoBehaviour
 			return;
 		if (sequence != null)
 			sequence.Kill(false);
+		inSideTheCube = false;
 		sequence = DOTween.Sequence();
 		sequence.Append(cameraManager.ExitCube());
 		sequence.OnComplete(() =>
@@ -96,16 +110,16 @@ public class GameManager : MonoBehaviour
 		if (sequence != null)
 			sequence.Kill(false);
 		sequence = DOTween.Sequence();
-		if (inGame)
-			sequence.Append(cameraManager.ExitCube());
+		sequence.Append(cameraManager.ExitCube());
 		sequence.OnStart(() =>
 		{
+			inGame = false;
+			inSideTheCube = false;
 			crashed = true;
 			cubeManager.CrashCube();
 		})
 		.OnComplete(() =>
 		{
-			inGame = false;
 			sequence = null;
 		});
 	}

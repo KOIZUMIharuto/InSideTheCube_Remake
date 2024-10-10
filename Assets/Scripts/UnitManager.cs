@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class UnitManager : MonoBehaviour
 {
-
+	[SerializeField] private GameManager gameManager;
 	[SerializeField] private GameObject cube;
 	[SerializeField] private List<GameObject> blocks = new List<GameObject>();
 
@@ -50,13 +50,27 @@ public class UnitManager : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotationAngle, 0, 0);
     }
 
+	private float GetXAxisRotation(Transform target)
+	{
+		Quaternion rotation = target.localRotation;
+		float xRotation = 
+			Mathf.Atan2(2f * (rotation.w * rotation.x + rotation.y * rotation.z), 
+			1f - 2f * (rotation.x * rotation.x + rotation.y * rotation.y)) * Mathf.Rad2Deg;
+
+		return xRotation;
+	}
+
+
 	public void FinishRotation(MouseManager mouseManager)
 	{
 		if (!rotating)
 			return ;
-		float rotateDuration = transform.localEulerAngles.x - RoundToNearest90(transform.localEulerAngles.x);
+		float rotateAngleX = RoundToNearest90(GetXAxisRotation(transform));
+		float rotateDuration = GetXAxisRotation(transform) - rotateAngleX;
 		rotateDuration = (Mathf.Abs(rotateDuration) / 90) * 0.5f;
-		Quaternion rotateQuaternion = Quaternion.Euler(RoundToNearest90(transform.localEulerAngles.x), 0, 0);
+		if (!Mathf.Approximately(rotateAngleX, 0) && !Mathf.Approximately(rotateAngleX, 360))
+			gameManager.IncreaseRotateCount();
+		Quaternion rotateQuaternion = Quaternion.Euler(rotateAngleX, 0, 0);
 		transform.DOLocalRotateQuaternion(rotateQuaternion, rotateDuration).OnComplete(() =>
 		{
 			ReleaseBlocks();
@@ -80,7 +94,10 @@ public class UnitManager : MonoBehaviour
 	}
 	public float RoundToNearest90(float value)
 	{
-		return Mathf.Round(value / 90f) * 90f;
+		float sign = Mathf.Sign(value);
+		value = Mathf.Abs(value) + 15f;
+		value = Mathf.Round(value / 90f) * 90f;
+		return (value * sign);
 	}
 
 	public void SetBlocksChildren()

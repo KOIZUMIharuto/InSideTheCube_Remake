@@ -3579,6 +3579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -16899,8 +16900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea9dd16d0a7d4b9c9c1522d7a3b841e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 1807483147}
-  inSideTheCube: 0
+  gameManager: {fileID: 387264385}
+  cubeManager: {fileID: 1807483149}
   forwardDirection: {x: 0, y: 0, z: 0}
   upDirection: {x: 0, y: 0, z: 0}
   rightDirection: {x: 0, y: 0, z: 0}
@@ -19554,6 +19555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -19683,8 +19685,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cubeManager: {fileID: 1807483149}
   cameraManager: {fileID: 330585548}
+  rotateCount: 0
+  time: 0
   inGame: 0
-  crashed: 0
+  inSideTheCube: 0
 --- !u!1 &387590228
 GameObject:
   m_ObjectHideFlags: 0
@@ -19729,6 +19733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -23531,6 +23536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -30955,6 +30961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -54339,6 +54346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -55881,6 +55889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -64619,6 +64628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0
@@ -87391,7 +87401,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.11509083, y: 0.019237576, z: 0.053170223, w: 0.9917444}
   m_LocalPosition: {x: 0, y: 8, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1345829873}
@@ -87483,7 +87493,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807483147}
   serializedVersion: 4
-  m_Mass: 10
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -101384,6 +101394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f52c22e3a984bcb81c2d3d73ec9027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 387264385}
   cube: {fileID: 1807483147}
   blocks: []
   rotating: 0

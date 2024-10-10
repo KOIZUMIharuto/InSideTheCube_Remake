@@ -3,9 +3,8 @@ using DG.Tweening;
 
 public class CameraManager : MonoBehaviour
 {
-	[SerializeField] private GameObject cube;
-
-	public bool inSideTheCube = false;
+	[SerializeField] private GameManager gameManager;
+	[SerializeField] private CubeManager cubeManager;
 
 	public Vector3 forwardDirection = Vector3.zero;
 	public Vector3 upDirection = Vector3.zero;
@@ -34,7 +33,7 @@ public class CameraManager : MonoBehaviour
 
 	void Update()
 	{
-		if (inSideTheCube)
+		if (gameManager.inSideTheCube)
 			HandleCameraRotation();
 		else if (forwardDirection != Vector3.zero || upDirection != Vector3.zero)
 		{
@@ -62,9 +61,9 @@ public class CameraManager : MonoBehaviour
 			this.transform.parent = cameraSystem.transform;
 		})
 		.OnComplete(() => {
-			inSideTheCube = true;
 			currentRotation = cameraSystem.transform.localRotation;
 			UpdateCameraStatus();
+			cubeManager.UpdatePanelRotationStatus();
 			enterSequence = null;
 		});
 		
@@ -80,7 +79,6 @@ public class CameraManager : MonoBehaviour
 		sequence.Append(transform.DOMove(originalPosition, moveDuration));
 		sequence.Join(transform.DORotateQuaternion(originalRotation, moveDuration));
 		sequence.OnStart(() => {
-			inSideTheCube = false;
 			this.transform.parent = null;
 		});
 
@@ -114,7 +112,7 @@ public class CameraManager : MonoBehaviour
 			sequence.Append(cameraSystem.transform.DOLocalRotateQuaternion(currentRotation, rotationDuration));
 			sequence.OnComplete(() => {
 				UpdateCameraStatus();
-				cube.GetComponent<CubeManager>().UpdatePanelRotationStatus();
+				cubeManager.UpdatePanelRotationStatus();
 			});
 		}
 	}

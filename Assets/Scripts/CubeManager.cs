@@ -14,18 +14,6 @@ public class CubeManager : MonoBehaviour
 
 	[SerializeField] private float torqueRange = 10f;
 
-	void Update()
-	{
-		// if (Input.GetKeyDown(KeyCode.U))
-		// 	FloatCube();
-		// if (Input.GetKeyDown(KeyCode.F))
-		// 	FallCube();
-		// if (Input.GetKeyDown(KeyCode.C))
-		// 	CrashCube();
-		// if (Input.GetKeyDown(KeyCode.R))
-		// 	ResetCube();
-	}
-
 	public void UpdateCube()
 	{
 		foreach (GameObject block in blocks)
