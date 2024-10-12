@@ -31,17 +31,6 @@ public class CameraManager : MonoBehaviour
 		originalRotation = transform.rotation;
 	}
 
-	void Update()
-	{
-		if (gameManager.inSideTheCube)
-			HandleCameraRotation();
-		else if (forwardDirection != Vector3.zero || upDirection != Vector3.zero)
-		{
-			forwardDirection = Vector3.zero;
-			upDirection = Vector3.zero;
-		}
-	}
-
 	private void UpdateCameraStatus()
 	{
 		forwardDirection = cameraSystem.transform.parent.InverseTransformDirection(cameraSystem.transform.forward);
@@ -85,9 +74,9 @@ public class CameraManager : MonoBehaviour
 		return sequence;
 	}
 
-	private void HandleCameraRotation()
+	public void HandleCameraRotation()
 	{
-		if (cameraSystem == null || Input.anyKeyDown == false)
+		if (cameraSystem == null)
 			return;
 
 		Quaternion rotationChange = Quaternion.identity;

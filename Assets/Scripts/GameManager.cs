@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	public float time = 0;
 	public bool inGame = false;
 	public bool inSideTheCube = false;
+	private bool shuffled = false;
 	private bool crashed = false;
 	private Sequence sequence;
 	void Start()
@@ -28,13 +29,21 @@ public class GameManager : MonoBehaviour
 			else
 				StartGame();
 		}
+		if (Input.anyKeyDown)
+		{
+			if (inSideTheCube)
+				cameraManager.HandleCameraRotation();
+			else
+				cubeManager.HandleCubeRotation();
+		}
+		
 		if (Input.GetKeyDown(KeyCode.I))
 			EnterCube();
 		if (Input.GetKeyDown(KeyCode.O))
 			ExitCube();
 		if (Input.GetKeyDown(KeyCode.R))
 			ResetCube();
-		if (Input.GetKeyDown(KeyCode.S))
+		if (Input.GetKeyDown(KeyCode.X))
 			ShuffleCube();
 	}
 
@@ -53,13 +62,14 @@ public class GameManager : MonoBehaviour
 		sequence.OnComplete(() =>
 		{
 			cubeManager.FallCube();
+			shuffled = true;
 			sequence = null;
 		});
 	}
 
 	private void StartGame()
 	{
-		if (crashed || sequence != null)
+		if (crashed || !shuffled || sequence != null)
 			return;
 		inGame = true;
 		time = 0;
@@ -135,6 +145,7 @@ public class GameManager : MonoBehaviour
 		{
 			cubeManager.FallCube();
 			crashed = false;
+			shuffled = false;
 			sequence = null;
 		});
 	}
@@ -151,6 +162,7 @@ public class GameManager : MonoBehaviour
 		{
 			inGame = false;
 			inSideTheCube = false;
+			shuffled = false;
 		})
 		.OnComplete(() =>
 		{

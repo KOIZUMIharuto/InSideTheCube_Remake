@@ -78,8 +78,6 @@ public class UnitManager : MonoBehaviour
 			mouseManager.horizontalRotateUnit = null;
 			CubeManager cubeManager = cube.GetComponent<CubeManager>();
 			cubeManager.UpdateCube();
-			if (cubeManager.clearCheck())
-				gameManager.GameClear();
 		});
 	}
 
