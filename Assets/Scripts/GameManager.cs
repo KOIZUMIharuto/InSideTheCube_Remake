@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
 	[SerializeField] private CubeManager cubeManager;
 	[SerializeField] private CameraManager cameraManager;
+	[SerializeField] private MouseManager mouseManager;
 
 	public int rotateCount = 0;
 	public float time = 0;
@@ -37,9 +38,9 @@ public class GameManager : MonoBehaviour
 				cubeManager.HandleCubeRotation();
 		}
 		
-		if (Input.GetKeyDown(KeyCode.I))
+		if (Input.GetAxis("Mouse ScrollWheel") > 0)
 			EnterCube();
-		if (Input.GetKeyDown(KeyCode.O))
+		if (Input.GetAxis("Mouse ScrollWheel") < 0)
 			ExitCube();
 		if (Input.GetKeyDown(KeyCode.R))
 			ResetCube();
@@ -126,6 +127,7 @@ public class GameManager : MonoBehaviour
 			inGame = false;
 			inSideTheCube = false;
 			crashed = true;
+			mouseManager.OnMouseRelease();
 			cubeManager.CrashCube();
 		})
 		.OnComplete(() =>

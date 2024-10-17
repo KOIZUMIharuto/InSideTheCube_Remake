@@ -96,7 +96,7 @@ public class MouseManager : MonoBehaviour
 			verticalRotateUnit.ForceFinishRotation();
 	}
 
-	private void OnMouseRelease()
+	public void OnMouseRelease()
 	{
 		clickedPanel = null;
 		clickedPanelComponent = null;
