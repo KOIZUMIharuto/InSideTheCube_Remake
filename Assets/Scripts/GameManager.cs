@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 		rotateCount++;
 	}
 
-	private void ShuffleCube()
+	public void ShuffleCube()
 	{
 		if (inGame || crashed || sequence != null)
 			return;
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private void StartGame()
+	public void StartGame()
 	{
 		if (crashed || !shuffled || sequence != null)
 			return;
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private void EnterCube()
+	public void EnterCube()
 	{
 		if (!inGame)
 			return;
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private void ExitCube()
+	public void ExitCube()
 	{
 		if (!inGame)
 			return;
@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private void EndGame()
+	public void EndGame()
 	{
 		if (sequence != null)
 			sequence.Kill(false);
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
 		});
 	}
 
-	private void ResetCube()
+	public void ResetCube()
 	{
 		if (inGame || sequence != null)
 			return;
