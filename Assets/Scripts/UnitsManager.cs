@@ -10,17 +10,17 @@ public class UnitsManager : MonoBehaviour
 
 	public int AddObjectToUnit(GameObject obj, float position)
 	{
-		UnitManager unitToremove;
+		UnitManager unitToRemove;
 		UnitManager unitToAdd;
 
 		if (top.Contains(obj))
-			unitToremove = top;
+			unitToRemove = top;
 		else if (center.Contains(obj))
-			unitToremove = center;
+			unitToRemove = center;
 		else if (bottom.Contains(obj))
-			unitToremove = bottom;
+			unitToRemove = bottom;
 		else
-			unitToremove = null;
+			unitToRemove = null;
 
 		if (position > 5)
 			unitToAdd = top;
@@ -29,11 +29,11 @@ public class UnitsManager : MonoBehaviour
 		else
 			unitToAdd = bottom;
 
-		if (unitToAdd != unitToremove)
+		if (unitToAdd != unitToRemove)
 		{
 			unitToAdd.Add(obj);
-			if (unitToremove != null)
-				unitToremove.Remove(obj);
+			if (unitToRemove)
+				unitToRemove.Remove(obj);
 		}
 
 		if (unitToAdd == top)
