@@ -24,7 +24,7 @@ public class UI_UnitManager : MonoBehaviour
 		blocks.Remove(obj);
 	}
 
-	public Tween AutoRotate(bool rotateDirection, float tweenDuration)
+	public Tween RotateAnimation(bool rotateDirection, float tweenDuration)
 	{
 		float rotationAngle = rotateDirection ? 90 : -90;
 		return (transform.DOLocalRotateQuaternion(Quaternion.Euler(rotationAngle, 0, 0), tweenDuration)
@@ -32,10 +32,21 @@ public class UI_UnitManager : MonoBehaviour
 			SetBlocksChildren();
 		})
 		.OnComplete(() =>{
+			Debug.Log("RotateAnimation Complete");
 			ReleaseBlocks();
 			cube.GetComponent<UI_CubeManager>().UpdateCube();
 			transform.localRotation = Quaternion.Euler(0, 0, 0);
 		}));
+	}
+
+	public void AutoRotate(bool rotateDirection)
+	{
+		float rotationAngle = rotateDirection ? 90 : -90;
+		SetBlocksChildren();
+		transform.localRotation = Quaternion.Euler(rotationAngle, 0, 0);
+		ReleaseBlocks();
+		cube.GetComponent<UI_CubeManager>().UpdateCube();
+		transform.localRotation = Quaternion.Euler(0, 0, 0);
 	}
 
 	public void SetBlocksChildren()
@@ -50,7 +61,7 @@ public class UI_UnitManager : MonoBehaviour
 		foreach (GameObject block in blocks)
 		{
 			block.transform.parent = cube.transform;
-			block.GetComponent<UI_BlockManager>().UpdateBelongingUnit();
+			// block.GetComponent<UI_BlockManager>().UpdateBelongingUnit();
 		}
 		rotating = false;
 	}

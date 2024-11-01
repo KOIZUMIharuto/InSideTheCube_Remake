@@ -46,11 +46,17 @@ public class UI_UnitsManager : MonoBehaviour
 		}
 	}
 
-	public Tween AutoRotate(bool rotateDirection, float tweenDuration, int rotateUnit)
+	public Tween RotateAnimation(bool rotateDirection, float tweenDuration, int rotateUnit)
 	{
 		UI_UnitManager unitToRotate = (0 <= rotateUnit && rotateUnit < units.Count) ? units[rotateUnit] : null;
 		if (unitToRotate == null)
 			return null;
-		return unitToRotate.AutoRotate(rotateDirection, tweenDuration);
+		return unitToRotate.RotateAnimation(rotateDirection, tweenDuration);
+	}
+
+	public void AutoRotate(bool rotateDirection, int rotateUnit)
+	{
+		UI_UnitManager unitToRotate = (0 <= rotateUnit && rotateUnit < units.Count) ? units[rotateUnit] : null;
+		unitToRotate.AutoRotate(rotateDirection);
 	}
 }
