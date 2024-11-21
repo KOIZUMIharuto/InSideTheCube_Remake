@@ -1,7 +1,7 @@
 # InSideTheCube_Remake
 
 ## 概要
-内部視点からルービックキューブを操作し遊べるPC向けゲーム<br>
+内部視点からルービックキューブを操作し遊べるPC向けゲーム(シミュレーターに近いが)<br>
 大学3年次に制作した授業課題のリメイク(オリジナル版https://github.com/KOIZUMIharuto/InSideTheCube)<br>
 
 ## 操作(キーボード+マウス)
